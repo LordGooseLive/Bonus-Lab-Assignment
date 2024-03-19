@@ -36,7 +36,79 @@ void heapSort(int arr[], int n)
 // extraMemoryAllocated counts bytes of extra memory allocated
 void mergeSort(int pData[], int l, int r)
 {
+	//not reusing lab code
 	
+	/*Steps:
+		1. implement terminating condition
+		2. recursion
+			call mergesort on left part
+			call mergsort on right part
+		3.merge the parts
+			get temp arrays
+			LOOP:	if value in left bigger than in right
+						put left first
+					else put right first
+			add any remaining data from left,
+			then add from right
+	*/
+
+	//Check terminating condition
+	if (l>= r)
+		return;
+	//else proceed
+
+	//Declare temp variables and arrays
+	int i, j, k; //counters
+	int mid = (l + r) / 2;
+	int n1 = mid - l +1;
+	int n2 = r - mid;
+	int * right = Alloc(Size (*pData) / 2); //right sub array
+	int * left = Alloc(Size (*pData) / 2); //left sub array
+
+	//Make recursive calls
+	mergeSort(pData, l, mid);
+	mergeSort(pData, mid+1, r);
+
+	//Populate temp arrays for merge
+	for (i = 0; i < n1; i++)
+		left [i] = pData[i + l];
+	for (j = 0; j < n2; j++)
+		right [j] = pData[j + mid + 1];
+	
+	//initialise counters
+	i = 0; //left sub-array counter
+	j = 0; //right sub-array counter
+	k = l; //primary array (pData) counter
+
+	//merge 
+	while (i < n1 && j < n2)
+	{
+		if (left [i] < right [j]) //left array value smaller
+		{
+			pData[k] = left[i];
+			i++;
+		}
+		else //right array value smaller
+		{
+			pData[k] = right [j];
+			j++;
+		}
+
+		k++;
+	}
+
+	//handle left over values
+	for (i; i < n1; i++)
+	{
+		pData [k] = left [i];
+		k++;
+	}
+
+	for (j; j < n2; j++)
+	{
+		pData [k] =  right [j];
+		k++;
+	}
 }
 
 // implement insertion sort
@@ -72,6 +144,8 @@ int parseData(char *inputFileName, int **ppData)
 		fscanf(inFile,"%d\n",&dataSz);
 		*ppData = (int *)Alloc(sizeof(int) * dataSz);
 		// Implement parse data block
+		for (int i = 0; i < dataSz; i++)
+			fscanf(inFile, "%d", ppData[i]);
 	}
 	
 	return dataSz;
