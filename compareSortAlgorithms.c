@@ -121,8 +121,31 @@ void mergeSort(int pData[], int l, int r)
 void insertionSort(int* pData, int n)
 {
 	/*Steps
-		1. 
+		1.  traverse from 0 to n
+		2.	initiate second loop from current-1 to 0
+		3. 	store value at current
+		4. 	in inner loop, slide values left 
+			until stored value is in correct place
+		5. replace stored value
 	*/
+	//variable declaration
+	int i, j, stored;
+
+	for (i = 1; i < n; i++) //primary traversal loop
+	{
+		stored = pData[i]; //stores current value
+
+		for (j = i-1; j >-1; j--)
+		{
+			if (pData[j] > stored) //current item larger than stored
+				pData[j+1] = pData[j]; //shift
+			
+			else
+				break; //in correct place
+		}
+
+		pData[j+1] = stored; //replaces stored value;
+	}
 }
 
 // implement bubble sort
@@ -135,12 +158,13 @@ void bubbleSort(int* pData, int n)
 			if data at second larger
 			than data a first, swap 
 	*/
+
 	int temp;
 	for (int i = 0; i < n - 1; i++) //primary traversal loop
 	{
 		for (int j = 0; j < n - i - 1; j++) //looks for smaller proceeding value
 		{
-			if (pData [j] > pData [j+1]) //swap everytime smaler value found
+			if (pData [j] > pData [j+1]) //swap everytime smaller value found
 			{
 				temp = pData [j];
 				pData [j] = pData[j+1];
@@ -167,7 +191,7 @@ void selectionSort(int* pData, int n)
 
 	for (int i = 0; i < n-1; i ++) //primary traversal loop
 	{	
-		min = i;
+		min = i; //sets smallest to current
 		for (int j = i+1; j < n; j++) //finds smallest proceeding value
 		{
 			if (pData[j] < pData [temp]) //compares values at indecies
