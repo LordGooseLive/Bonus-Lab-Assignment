@@ -120,19 +120,27 @@ void mergeSort(int pData[], int l, int r)
 // extraMemoryAllocated counts bytes of memory allocated
 void insertionSort(int* pData, int n)
 {
-	
+	/*Steps
+		1. 
+	*/
 }
 
 // implement bubble sort
 // extraMemoryAllocated counts bytes of extra memory allocated
 void bubbleSort(int* pData, int n)
 {
+	/*Steps
+		1. traverse array
+		2. traverse again until current point
+			if data at second larger
+			than data a first, swap 
+	*/
 	int temp;
-	for (int i = 0; i < n - 1; i++)
+	for (int i = 0; i < n - 1; i++) //primary traversal loop
 	{
-		for (int j = 0; j < n - i - 1; j++)
+		for (int j = 0; j < n - i - 1; j++) //looks for smaller proceeding value
 		{
-			if (pData [j] > pData [j+1]) //swap
+			if (pData [j] > pData [j+1]) //swap everytime smaler value found
 			{
 				temp = pData [j];
 				pData [j] = pData[j+1];
@@ -153,12 +161,14 @@ void selectionSort(int* pData, int n)
 			if value smaller, set min
 		4. if min not current, swap values
 	*/
+
+	//Variable declaration
 	int temp, min;
 
-	for (int i = 0; i < n-1; i ++)
+	for (int i = 0; i < n-1; i ++) //primary traversal loop
 	{	
 		min = i;
-		for (int j = i+1; j < n; j++) //starts checking next index
+		for (int j = i+1; j < n; j++) //finds smallest proceeding value
 		{
 			if (pData[j] < pData [temp]) //compares values at indecies
 			min = j;
@@ -167,7 +177,7 @@ void selectionSort(int* pData, int n)
 		if (min == i) //no need to swap
 			continue;
 
-		//swap
+		//swaps only smallest value
 		temp = pData [min];
 		pData [min] = pData [i];
 		pData [i] = pData[min];
