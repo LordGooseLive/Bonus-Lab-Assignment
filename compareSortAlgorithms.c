@@ -2,6 +2,11 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+/*Completed:
+	Mergesort
+	bubblesort
+	selectionsort
+*/
 int extraMemoryAllocated;
 
 void *Alloc(size_t sz)
@@ -28,7 +33,7 @@ size_t Size(void* ptr)
 
 // implements heap sort
 // extraMemoryAllocated counts bytes of memory allocated
-void heapSort(int arr[], int n)
+void heapSort(int arr[], int n, int data_size)
 {
 }
 
@@ -62,8 +67,8 @@ void mergeSort(int pData[], int l, int r)
 	int mid = (l + r) / 2;
 	int n1 = mid - l +1;
 	int n2 = r - mid;
-	int * right = Alloc(Size (*pData) / 2); //right sub array
-	int * left = Alloc(Size (*pData) / 2); //left sub array
+	int * right = Alloc(( r-l) / 2); //right sub array
+	int * left = Alloc(( r-l) / 2); //left sub array
 
 	//Make recursive calls
 	mergeSort(pData, l, mid);
@@ -123,9 +128,9 @@ void insertionSort(int* pData, int n)
 void bubbleSort(int* pData, int n)
 {
 	int temp;
-	for (int i = 0; i < Size(pData) - 1; i++)
+	for (int i = 0; i < n - 1; i++)
 	{
-		for (int j = 0; j < Size(pData) - i - 1; j++)
+		for (int j = 0; j < n - i - 1; j++)
 		{
 			if (pData [j] > pData [j+1]) //swap
 			{
@@ -141,7 +146,32 @@ void bubbleSort(int* pData, int n)
 // extraMemoryAllocated counts bytes of extra memory allocated
 void selectionSort(int* pData, int n)
 {
-	
+	/*Steps:
+		1. traverse array until 2nd to last
+		2. set min index current
+		3. traverse rest of array until end
+			if value smaller, set min
+		4. if min not current, swap values
+	*/
+	int temp, min;
+
+	for (int i = 0; i < n-1; i ++)
+	{	
+		min = i;
+		for (int j = i+1; j < n; j++) //starts checking next index
+		{
+			if (pData[j] < pData [temp]) //compares values at indecies
+			min = j;
+		}
+
+		if (min == i) //no need to swap
+			continue;
+
+		//swap
+		temp = pData [min];
+		pData [min] = pData [i];
+		pData [i] = pData[min];
+	}
 }
 
 // parses input file to an integer array
