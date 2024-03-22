@@ -31,10 +31,63 @@ size_t Size(void* ptr)
 	return ((size_t*)ptr)[-1];
 }
 
+//helper function for heapsort
+//makes max heap
+//inspired by code from geeksforgeeks.org
+void heapify (int* pData, int n, int i)
+{
+	//declare working variables
+	int max = i; //index of max value
+	int l = 2*i; //index of left child
+	int r = 2*i + 1; //index of right child
+	int temp; //used for swaping values
+	
+	//check if children out of bounds
+	if (l >= n || r >= n)
+		return;
+
+	//find max value
+	if (pData[l] > pData[max])
+		max = l;
+	
+	if (pData[r] > pData[max])
+		max = r;
+	
+	//execute heapify
+	if (max != i) //checks if any change necessary
+	{
+		//sort
+		temp = pData [max];
+		pData[max] = pData[i];
+		pData[i] = pData[max];
+
+		//make recursive call
+		heapify(pData, n, max);
+	}
+}
+
 // implements heap sort
 // extraMemoryAllocated counts bytes of memory allocated
-void heapSort(int arr[], int n, int data_size)
+void heapSort(int arr[], int n)
 {
+	int i, temp;
+	int first_leaf = n/2; //index of firt leaf
+	// make maxheap
+
+	//make max heap
+	for (i = first_leaf -1; i > -1; i--)
+		heapify (arr, n, i);
+	
+	for (i = n-1; i > 0; i--)
+	{
+		//swap each value
+		temp = arr[i];
+		arr[i] = arr[0];
+		arr[0] = temp;
+
+		//repair heap property
+		heapify(arr, i, 0);
+	}	
 }
 
 // implement merge sort
@@ -314,7 +367,7 @@ int main(void)
 		memcpy(pDataCopy, pDataSrc, dataSz*sizeof(int));
 		extraMemoryAllocated = 0;
 		start = clock();
-		heapSort(pDataCopy, 0, dataSz - 1);
+		heapSort(pDataCopy, dataSz - 1);
 		end = clock();
 		cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
 		printf("\truntime\t\t\t: %.1lf\n",cpu_time_used);
