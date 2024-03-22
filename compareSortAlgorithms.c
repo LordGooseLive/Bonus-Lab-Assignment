@@ -1,12 +1,8 @@
 #include <time.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
-/*Completed:
-	Mergesort
-	bubblesort
-	selectionsort
-*/
 int extraMemoryAllocated;
 
 void *Alloc(size_t sz)
