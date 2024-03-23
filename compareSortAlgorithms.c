@@ -163,6 +163,9 @@ void mergeSort(int pData[], int l, int r)
 		pData [k] =  right [j];
 		k++;
 	}
+	//free memory
+	DeAlloc(right);
+	DeAlloc(left);
 }
 
 // implement insertion sort
@@ -241,10 +244,10 @@ void selectionSort(int* pData, int n)
 	for (int i = 0; i < n-1; i ++) //primary traversal loop
 	{	
 		min = i; //sets smallest to current
-		for (int j = i+1; j < n; j++) //finds smallest proceeding value
+		for (int j = i; j < n; j++) //finds smallest proceeding value
 		{
-			if (pData[j] < pData [temp]) //compares values at indecies
-			min = j;
+			if (pData[j] < pData [min]) //compares values at indecies
+				min = j;
 		}
 
 		if (min == i) //no need to swap
@@ -253,7 +256,7 @@ void selectionSort(int* pData, int n)
 		//swaps only smallest value
 		temp = pData [min];
 		pData [min] = pData [i];
-		pData [i] = pData[min];
+		pData [i] = temp;
 	}
 }
 
@@ -263,14 +266,21 @@ int parseData(char *inputFileName, int **ppData)
 	FILE* inFile = fopen(inputFileName,"r");
 	int dataSz = 0;
 	*ppData = NULL;
+	int n, i, * data;
 	
 	if (inFile)
 	{
-		fscanf(inFile,"%d\n",&dataSz);
-		*ppData = (int *)Alloc(sizeof(int) * dataSz);
+		fscanf(inFile,"%d",&dataSz);
+		*ppData = (int*) Alloc(sizeof(int) * dataSz);
+		if (*ppData == NULL)
+			exit;
+
 		// Implement parse data block
-		for (int i = 0; i < dataSz; i++)
-			fscanf(inFile, "%d", ppData[i]);
+		for (i = 0; i < dataSz-1; i++)
+		{
+			fscanf(inFile, "%d", &n);
+			(*ppData)[i] = n;
+		}
 	}
 	
 	return dataSz;
