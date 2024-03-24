@@ -34,19 +34,15 @@ void heapify (int* pData, int n, int i)
 {
 	//declare working variables
 	int max = i; //index of max value
-	int l = 2*i; //index of left child
-	int r = 2*i + 1; //index of right child
+	int l = 2*i + 1; //index of left child
+	int r = 2*i + 2; //index of right child
 	int temp; //used for swaping values
 	
-	//check if children out of bounds
-	if (l >= n || r >= n)
-		return;
-
 	//find max value
-	if (pData[l] > pData[max])
+	if (n > l && pData[l] > pData[max])
 		max = l;
 	
-	if (pData[r] > pData[max])
+	if ( n > r && pData[r] > pData[max])
 		max = r;
 	
 	//execute heapify
@@ -55,7 +51,7 @@ void heapify (int* pData, int n, int i)
 		//sort
 		temp = pData [max];
 		pData[max] = pData[i];
-		pData[i] = pData[max];
+		pData[i] = temp;
 
 		//make recursive call
 		heapify(pData, n, max);
@@ -67,19 +63,17 @@ void heapify (int* pData, int n, int i)
 void heapSort(int arr[], int n)
 {
 	int i, temp;
-	int first_leaf = n/2; //index of firt leaf
-	// make maxheap
 
 	//make max heap
-	for (i = first_leaf -1; i > -1; i--)
+	for (i = n/2 -1; i > -1; i--)
 		heapify (arr, n, i);
 	
 	for (i = n-1; i > 0; i--)
 	{
 		//swap each value
-		temp = arr[i];
-		arr[i] = arr[0];
-		arr[0] = temp;
+		temp = arr[0];
+		arr[0] = arr[i];
+		arr[i] = temp;
 
 		//repair heap property
 		heapify(arr, i, 0);
@@ -114,10 +108,10 @@ void mergeSort(int pData[], int l, int r)
 	//Declare temp variables and arrays
 	int i, j, k; //counters
 	int mid = (l + r) / 2;
-	int n1 = mid - l +1;
+	int n1 = mid - l +1; //midpoint of 
 	int n2 = r - mid;
-	int * right = Alloc(( r-l) / 2); //right sub array
-	int * left = Alloc(( r-l) / 2); //left sub array
+	int * right = (int*) Alloc( sizeof(int) * n2); //right sub array
+	int * left = (int*) Alloc( sizeof(int) * n1); //left sub array
 
 	//Make recursive calls
 	mergeSort(pData, l, mid);
