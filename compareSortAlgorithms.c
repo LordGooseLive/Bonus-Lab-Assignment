@@ -65,10 +65,10 @@ void heapSort(int arr[], int n)
 	int i, temp;
 
 	//make max heap
-	for (i = n/2 -1; i > -1; i--)
+	for (i = n/2 +1; i > -1; i--)
 		heapify (arr, n, i);
 	
-	for (i = n-1; i > 0; i--)
+	for (i = n; i > 0; i--)
 	{
 		//swap each value
 		temp = arr[0];
